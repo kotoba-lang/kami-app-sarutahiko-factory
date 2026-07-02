@@ -1,0 +1,21 @@
+;; Synthetic production line: receive -> frame-weld -> paint -> marriage ->
+;; ship. :station/cell references resolve against factory.edn's cells +
+;; loaders (cell_1 / loader_1).
+{:prod-order/of "sarutahiko-factory-synth"
+ :prod-order/takt-s 45
+ :prod-order/stations
+ [{:station/seq 1 :station/id "st:receive" :station/name "Receive"
+   :station/layer "body-in-white" :station/op "receive"
+   :station/x 5.0 :station/y 25.0 :station/cell "" :station/cycle-s 30.0}
+  {:station/seq 2 :station/id "st:frame-weld" :station/name "Frame weld"
+   :station/layer "body-in-white" :station/op "frame-weld"
+   :station/x 20.0 :station/y 15.0 :station/cell "cell_1" :station/cycle-s 60.0}
+  {:station/seq 3 :station/id "st:paint" :station/name "Paint"
+   :station/layer "paint" :station/op "paint"
+   :station/x 65.0 :station/y 25.0 :station/cell "" :station/cycle-s 90.0}
+  {:station/seq 4 :station/id "st:marriage" :station/name "Marriage"
+   :station/layer "chassis" :station/op "marriage"
+   :station/x 75.0 :station/y 25.0 :station/cell "" :station/cycle-s 40.0}
+  {:station/seq 5 :station/id "st:ship" :station/name "Ship"
+   :station/layer "finish" :station/op "ship"
+   :station/x 86.0 :station/y 17.5 :station/cell "loader_1" :station/cycle-s 25.0}]}

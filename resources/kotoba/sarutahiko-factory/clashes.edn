@@ -1,0 +1,7 @@
+;; Synthetic engineering clashes paired with factory.edn.
+{:clashes/of "sarutahiko-factory-synth"
+ :clashes/clashes
+ [{:clash/id "clash_1" :clash/kind "hard"
+   :clash/systems ["electrical" "structure"] :clash/x 20.0 :clash/y 24.0 :clash/z 8.4}
+  {:clash/id "clash_2" :clash/kind "coordination"
+   :clash/systems ["water-supply" "data-backbone"] :clash/x 10.0 :clash/y 25.0 :clash/z 0.3}]}
