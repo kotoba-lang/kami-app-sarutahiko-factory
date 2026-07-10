@@ -16,13 +16,47 @@
   `.clj` (JVM classpath resources only) rather than `.cljc` — there is
   nothing to bundle a browser-side loader for yet, and every other
   namespace in this repo (the actual domain contract) is `.cljc` and has
-  no I/O."
+  no I/O.
+
+  As of the Datomic/Datascript-queryable EDN refactor, each fixture file on
+  disk is a `[{:db/id -1 :factory/... ...}]` tx-data vector (ready to hand
+  to `(d/transact conn ...)` as-is) rather than a bare map — non-scalar
+  values (nested maps / vectors-of-maps) are stored pr-str'd as string
+  \"blob\" attributes. `load-edn` here unwraps that back into the plain,
+  un-blobbed map the rest of this repo's domain code
+  (`kotoba.sarutahiko-factory.factory` et al.) and tests already expect,
+  so every existing call site keeps working unchanged. Top-level attribute
+  keys were already idiomatically namespaced per file (`:factory/*`,
+  `:robots/*`, ...) before this refactor, so they are kept as-is (not
+  re-namespaced)."
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]))
 
+(defn- unblob
+  "Reverse of edn-datomize.bb's `attr-value`: a blob attribute's value is a
+  pr-str'd string of the original nested collection. Non-string (already
+  scalar/live) values pass through unchanged."
+  [v]
+  (if (string? v)
+    (try
+      (let [parsed (edn/read-string v)]
+        (if (coll? parsed) parsed v))
+      (catch Exception _ v))
+    v))
+
+(defn- reconstitute-entity
+  "tx-data `[{:db/id -1 :ns/key val ...}]` -> the original `{:ns/key val ...}`
+  map, with blob string values parsed back into their original collections.
+  Keys are already namespaced in the on-disk data, so they are kept as-is
+  (unlike the generic manifest/edn-datomize.bb reconstitution helper, which
+  strips namespaces because it re-namespaces bare keys on write)."
+  [tx-data]
+  (into {} (map (fn [[k v]] [k (unblob v)]))
+        (dissoc (first tx-data) :db/id)))
+
 (defn- load-edn [path]
   (if-let [r (io/resource path)]
-    (edn/read-string (slurp r))
+    (reconstitute-entity (edn/read-string (slurp r)))
     (throw (ex-info "missing sarutahiko-factory fixture resource" {:path path}))))
 
 (defn factory
