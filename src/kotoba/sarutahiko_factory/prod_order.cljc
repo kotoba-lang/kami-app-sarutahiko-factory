@@ -22,7 +22,7 @@
 
   Pure: no I/O. See `kotoba.sarutahiko-factory.fixtures/prod-order` for
   this repo's synthetic test fixture."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn stations [order] (:prod-order/stations order))
 

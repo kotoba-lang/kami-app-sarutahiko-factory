@@ -15,7 +15,7 @@
 
   Pure: no I/O. See `kotoba.sarutahiko-factory.fixtures/construction-order`
   for this repo's synthetic test fixture."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn steps [order] (:construction-order/steps order))
 
