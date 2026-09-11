@@ -1,4 +1,4 @@
-#!/usr/bin/env bb
+#!/usr/bin/env kbb
 ;; edn-datomize.bb — EDN -> Datomic/Datascript tx-data 変換ツール
 ;; (adapted from com-junkawasaki/root's manifest/edn-datomize.bb, commit
 ;; a2090e87a730, for use inside a single child repo's own worktree — schema
