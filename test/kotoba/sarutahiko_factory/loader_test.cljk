@@ -1,5 +1,5 @@
 (ns kotoba.sarutahiko-factory.loader-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [kotoba.sarutahiko-factory.fixtures :as fixtures]
             [kotoba.sarutahiko-factory.loader :as loader]))
 
