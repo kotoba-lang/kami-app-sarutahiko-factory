@@ -29,7 +29,7 @@
   keys were already idiomatically namespaced per file (`:factory/*`,
   `:robots/*`, ...) before this refactor, so they are kept as-is (not
   re-namespaced)."
-  (:require [clojure.edn :as edn]
+  (:require [kotoba.lang.edn :as edn]
             [clojure.java.io :as io]))
 
 (defn- unblob
