@@ -30,7 +30,7 @@
   `:robots/*`, ...) before this refactor, so they are kept as-is (not
   re-namespaced)."
   (:require [kotoba.lang.edn :as edn]
-            [clojure.java.io :as io]))
+            [kotoba.io :as io]))
 
 (defn- unblob
   "Reverse of edn-datomize.bb's `attr-value`: a blob attribute's value is a
